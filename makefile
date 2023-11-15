@@ -7,12 +7,15 @@ PROGRAMS = complex
 
 $(PROGRAMS) : %: bin/%.o
 	$(CC) $< $(COFLAGS) $@
+# Rule that creates the executables of the programs in the list PROGRAMS
 
-bin/%.o : src/%.c include/%.h
-	$(CC) $(CCFLAGS) $< -o $@
+%.o : src/%.c include/%.h
+	$(CC) $(CCFLAGS) $< -o bin/$@
 
-bin/%.o : src/%.c
-	$(CC) $(CCFLAGS) $< -o $@
+%.o : src/%.c
+	$(CC) $(CCFLAGS) $< -o bin/$@
+# Rule that creates the binary file of yourfile.c into ./bin/yourfile.o
+# To use, just type "make yourfile.o" and enter
 
 clean : 
 	rm -f bin/*.o
