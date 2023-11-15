@@ -3,14 +3,17 @@ CC = gcc
 CCFLAGS = -g -Wall -Wextra -c
 COFLAGS = -g -Wall -Wextra -o
 
-PROGRAMS = fft
+PROGRAMS = complex
 
-fft : fft.c
-	$(CC) $< $(COFLAGS) fft
+$(PROGRAMS) : %: bin/%.o
+	$(CC) $< $(COFLAGS) $@
 
-%.o : src/%.c 
-	$(CC) $(CCFLAGS) $< -o /bin/$@
+bin/%.o : src/%.c include/%.h
+	$(CC) $(CCFLAGS) $< -o $@
+
+bin/%.o : src/%.c
+	$(CC) $(CCFLAGS) $< -o $@
 
 clean : 
-	rm -f *.o
+	rm -f bin/*.o
 	rm -f $(PROGRAMS)
