@@ -11,7 +11,6 @@ PROGRAMS = main
 # premiere regle : liste des programme à compiler
 # règle sans action, seulement avec des dépendances 
 all : $(PROGRAMS)
-
 # règle pour compiler le main
 # il faut mettre tous les noms des fichiers .o dans les dépendances
 main : main.o  complex.o
