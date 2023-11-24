@@ -1,3 +1,8 @@
+# AUTHORS : TAN Philippe
+#           GOGRITCHIANI Lasha
+#           CHEN Virginie
+
+
 # déclaration de variables
 # le compilateur
 CC = gcc
@@ -14,7 +19,7 @@ all : $(PROGRAMS)
 
 # règle pour compiler le main
 # il faut mettre tous les noms des fichiers .o dans les dépendances
-main : main.o  complex.o
+main : main.o  complex.o polynom.o
 	$(CC) $(COFLAGS) main bin/*.o -lm
 main.o :   src/main.c include/*.h
 	$(CC) $(CCFLAGS) src/main.c -o bin/main.o
