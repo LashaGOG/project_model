@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include "../include/complex.h"
 
+/* AUTHORS : TAN Philippe
+             GOGRITCHIANI Lasha
+             CHEN Virginie
+*/
+
 complex* create_complex(double a, double b){
     complex* z = (complex*) calloc(1,sizeof(complex));
     if (z == NULL) {
@@ -75,3 +80,4 @@ complex* divide_complex(complex* z1, complex* z2){
 double norme_complex(complex* z){
     return sqrt( pow(z->re,2) + pow(z->im,2) );
 }
+
