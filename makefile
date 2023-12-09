@@ -2,31 +2,44 @@
 #           GOGRITCHIANI Lasha
 #           CHEN Virginie
 
-
-# déclaration de variables
-# le compilateur
+# declaration of variables
 CC = gcc
-# les options de compilateur
-#-fsanitize=address
-CCFLAGS = -g  -Wall -Wextra -c
-COFLAGS = -g  -Wall -Wextra -o
-# liste des programme à créer 
+CCFLAGS = -g -Wall -Wextra -c
+COFLAGS = -g -Wall -Wextra -o
 PROGRAMS = main
 
-# premiere regle : liste des programme à compiler
-# règle sans action, seulement avec des dépendances 
-all : $(PROGRAMS)
-# règle pour compiler le main
-# il faut mettre tous les noms des fichiers .o dans les dépendances
-main : main.o  complex.o polynom.o
-	$(CC) $(COFLAGS) main bin/*.o -lm
-main.o :   src/main.c include/*.h
-	$(CC) $(CCFLAGS) src/main.c -o bin/main.o
-# règle générique de compilation des .o à partir des .c
-%.o : src/%.c 
-	$(CC) $(CCFLAGS) $< -o bin/$@
-# effacer les .o et les executables 
-# pour executer cette regle il faut taper dans le termnal "make clean"
-clean : 
-	rm -f bin/*.o
-	rm $(PROGRAMS)
+# source and Object directories
+SRC_DIR = src
+OBJ_DIR = bin
+INCLUDE_DIR = include
+
+# automatically collect all C source files and corresponding object files
+SOURCES := $(wildcard $(SRC_DIR)/*.c)
+OBJECTS := $(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+# default rule
+all: prepare $(PROGRAMS)
+
+# create bin directory
+prepare:
+	mkdir -p $(OBJ_DIR)
+
+# main program rule
+$(PROGRAMS): $(OBJECTS)
+	$(CC) $(COFLAGS) $@ $^ -lm
+
+# generic rule for object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CCFLAGS) $< -o $@
+
+# include dependencies for each source file
+-include $(OBJECTS:.o=.d)
+
+# generate dependencies
+$(OBJ_DIR)/%.d: $(SRC_DIR)/%.c
+	@$(CC) $(CCFLAGS) -MM -MT '$(@:.d=.o)' $< -MF $@
+
+# Clean rule
+clean:
+	rm -rf $(OBJ_DIR)
+	rm -f $(PROGRAMS)

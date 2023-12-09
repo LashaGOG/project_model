@@ -9,14 +9,17 @@ double* naive_algo(double* p1,double* p2, int len1, int len2){
     int i,j;
     double *p3 =(double*) calloc(len1+len2-1,sizeof(double));
 
-    if (p3 == NULL) {
+    if (p3 == NULL)
+    {
         perror("Erreur mémoire non allouée pour naive_algo! \n");
         exit(1);
     }
 
-    for (i=0; i<len1 ;i++){
-        for(j=0; j<len2 ;j++){
-        p3[i + j] += p1[i]*p2[j];
+    for (i = 0; i < len1; i++)
+    {
+        for (j = 0; j < len2; j++)
+        {
+            p3[i + j] += p1[i] * p2[j];
         }
     }
     return p3;
@@ -33,6 +36,48 @@ void print_polynom(double *p, int len){
 
 void delete_polynom(double *p){
     free(p);
+}
+
+int *get_pe(int *p, int n)
+{
+    /* return even terms of polynom p */
+    int *pe = (int *)calloc(n / 2, sizeof(int));
+    for (int i = 0; i < n; i++)
+    {
+        pe[i] = p[2 * i];
+    }
+    return pe;
+}
+int *get_po(int *p, int n)
+{
+    /* return odd terms of polynom p */
+    int *po = (int *)calloc(n / 2, sizeof(int));
+    for (int i = 0; i < n; i++)
+    {
+        po[i] = p[2 * i + 1];
+    }
+    return po;
+}
+
+int *get_pe(int *p, int n)
+{
+    /* return even terms of polynom p */
+    int *pe = (int *)calloc(n / 2, sizeof(int));
+    for (int i = 0; i < n; i++)
+    {
+        pe[i] = p[2 * i];
+    }
+    return pe;
+}
+int *get_po(int *p, int n)
+{
+    /* return odd terms of polynom p */
+    int *po = (int *)calloc(n / 2, sizeof(int));
+    for (int i = 0; i < n; i++)
+    {
+        po[i] = p[2 * i + 1];
+    }
+    return po;
 }
 
 double generate_random_real(double a, double b) {

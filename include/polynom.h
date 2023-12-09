@@ -17,6 +17,10 @@ void delete_polynom(double* p);
 double generate_random_real(double a, double b);
 double* random_polynom(int deg, int a, int b);
 
+int *get_pe(int *p, int n);
+
+int *get_po(int *p, int n);
+
 
 
 

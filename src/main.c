@@ -1,15 +1,14 @@
 #include <stdio.h>
 #include "../include/complex.h"
 #include "../include/polynom.h"
-
+#include "../include/fft.h"
 
 /* AUTHORS : TAN Philippe
              GOGRITCHIANI Lasha
              CHEN Virginie
 */
 
-
-int main() 
+int main()
 {
     srand(time(NULL));
     complex* z1 = create_complex(-2,-2);
