@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
 /* AUTHORS : TAN Philippe
              GOGRITCHIANI Lasha
@@ -10,11 +11,11 @@
 #ifndef POLYNOM
 #define POLYNOM
 
-int* naive_algo(int p1[],int p2[], int len1, int len2);
-void print_polynom(int p[], int len);
-void delete_polynom(int p[]);
-
-
+double* naive_algo(double* p1,double* p2, int len1, int len2);
+void print_polynom(double* p, int n);
+void delete_polynom(double* p);
+double generate_random_real(double a, double b);
+double* random_polynom(int deg, int a, int b);
 
 
 
