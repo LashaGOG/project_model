@@ -10,48 +10,20 @@
 
 int main()
 {
-    srand(time(NULL));
-    complex* z1 = create_complex(-2,-2);
-    complex* z2 = create_complex(0,0);
-    print_complex(z1);
-    print_complex(z2);
+    complex z1 = create_complex(1.0, 2.0);
+    complex z2 = create_complex(3.0, 4.0);
 
-    double p1[] = {1,-1,0,2};         //2x^3-x+1
-    double p2[] = {0,-10,1,0,0,-4};   //-4x^5+x^2-10x
-    int len1 = 4;
-    int len2 = 6;
+    complex sum = add_complex(z1, z2);
+    complex sub = subtract_complex(z1, z2);
+    complex mul = multiply_complex(z1, z2);
+    complex div = divide_complex(z1, z2);
+    double norme_z2 = norm_complex(z2);
 
-    // double p1[] = {0, 1};
-    // double p2[] = {2, -4};
-    // int len1 = 2;
-    // int len2 = 2;
-    int len = len1+len2-1;
-
-
-    // complex* Z = add_complex(z1,z2);
-    // complex* Z = minus_complex(z1,z2);
-    // complex* Z = mult_complex(z1,z2);
-    complex* Z = divide_complex(z1,z2);
-
-    print_complex(Z);
-    double norme = norme_complex(z1);
-    printf("La norme vaut %lf\n", norme);
-
-    double* p3 = naive_algo(p1,p2,len1,len2);
-    print_polynom(p3,len);
-    delete_polynom(p3);
-
-
-    delete_complex(z1);
-    delete_complex(z2);
-    delete_complex(Z);
-
-    int a = -100;
-    int b = 200;
-    int deg = 6 ;    //polynôme de degré 5
-    double* polynom = random_polynom(deg,a,b);
-    print_polynom(polynom, deg);
-    delete_polynom(polynom);
+    print_complex(sum);
+    print_complex(sub);
+    print_complex(mul);
+    print_complex(div);
+    printf("%lf\n", norme_z2);
 
     return 0;
 }
