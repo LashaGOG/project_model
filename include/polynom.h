@@ -10,21 +10,10 @@
 #ifndef POLYNOM
 #define POLYNOM
 
-int* naive_algo(int p1[],int p2[], int len1, int len2);
+int *naive_algo(int p1[], int p2[], int len1, int len2);
 void print_polynom(int p[], int len);
 void delete_polynom(int p[]);
-
-
-
-
-
-
-
-
-
-
-
-
-
+int *get_pe(int *p, int n);
+int *get_po(int *p, int n)
 
 #endif // POLYNOM
