@@ -26,5 +26,8 @@ complex multiply_complex(complex z1, complex z2);
 // // complex* conjugate_complex(complex*z1);
 complex divide_complex(complex z1, complex z2);
 double norm_complex(complex z);
+complex exp_complex(double theta);
+
+
 
 #endif // COMPLEX

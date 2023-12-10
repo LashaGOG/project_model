@@ -59,8 +59,8 @@ complex add_complex(complex z1, complex z2)
 
 complex subtract_complex(complex z1, complex z2)
 {
-    complex substance = create_complex(z1.re - z2.re, z1.im - z2.im);
-    return substance;
+    complex sub = create_complex(z1.re - z2.re, z1.im - z2.im);
+    return sub;
 }
 
 complex multiply_complex(complex z1, complex z2)
@@ -96,3 +96,9 @@ double norm_complex(complex z)
 {
     return sqrt(pow(z.re, 2) + pow(z.im, 2));
 }
+
+complex exp_complex(double theta)
+{
+    return create_complex(cos(theta),sin(theta));
+}
+

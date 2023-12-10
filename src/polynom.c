@@ -5,9 +5,9 @@
              CHEN Virginie
 */
 
-double* naive_algo(double* p1,double* p2, int len1, int len2){
+int* naive_algo(int* p1,int* p2, int len1, int len2){
     int i,j;
-    double *p3 =(double*) calloc(len1+len2-1,sizeof(double));
+    int *p3 =(int*) calloc(len1+len2-1,sizeof(int));
 
     if (p3 == NULL)
     {
@@ -25,70 +25,28 @@ double* naive_algo(double* p1,double* p2, int len1, int len2){
     return p3;
 }
 
-void print_polynom(double *p, int len){
+void print_polynom(int *p, int len){
     int i;
     printf("Le polynôme est : \n");
     for(i= 0; i< len; i++){
-        printf("%.2lf*X^%d ",p[i],i);
+        printf("%d*X^%d ",p[i],i);
     }
     printf("\n");
 }
 
-void delete_polynom(double *p){
+void delete_polynom(int *p){
     free(p);
 }
 
-int *get_pe(int *p, int n)
-{
-    /* return even terms of polynom p */
-    int *pe = (int *)calloc(n / 2, sizeof(int));
-    for (int i = 0; i < n; i++)
-    {
-        pe[i] = p[2 * i];
-    }
-    return pe;
-}
-int *get_po(int *p, int n)
-{
-    /* return odd terms of polynom p */
-    int *po = (int *)calloc(n / 2, sizeof(int));
-    for (int i = 0; i < n; i++)
-    {
-        po[i] = p[2 * i + 1];
-    }
-    return po;
-}
-
-int *get_pe(int *p, int n)
-{
-    /* return even terms of polynom p */
-    int *pe = (int *)calloc(n / 2, sizeof(int));
-    for (int i = 0; i < n; i++)
-    {
-        pe[i] = p[2 * i];
-    }
-    return pe;
-}
-int *get_po(int *p, int n)
-{
-    /* return odd terms of polynom p */
-    int *po = (int *)calloc(n / 2, sizeof(int));
-    for (int i = 0; i < n; i++)
-    {
-        po[i] = p[2 * i + 1];
-    }
-    return po;
-}
-
-double generate_random_real(double a, double b) {
+int generate_random_real(int a, int b) {
     //Génère un réel aléatoire entre a et b
-    return a + ((double)rand() / RAND_MAX) * (b - a);
+    return a + ((int)rand() / RAND_MAX) * (b - a);
 }
 
 
-double* random_polynom(int deg, int a, int b){
+int* random_polynom(int deg, int a, int b){
     //Renvoie un polynôme de degré deg-1 à coefficients réels aléatoires entre a et b
-    double* p = (double*) calloc(deg, sizeof(double));
+    int* p = (int*) calloc(deg, sizeof(int));
     int i;
 
     if (p == NULL) {
@@ -102,3 +60,4 @@ double* random_polynom(int deg, int a, int b){
     return p;
 
 }
+

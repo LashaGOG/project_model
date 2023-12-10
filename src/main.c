@@ -25,5 +25,22 @@ int main()
     print_complex(div);
     printf("%lf\n", norme_z2);
 
+
+    // complex P[] = {create_complex(5,0) , create_complex(3,0) , create_complex(2,0) , create_complex(1,0) };
+    // complex p[] = {create_complex(1,0), create_complex(2,0), create_complex(4,0), create_complex(8,0), 
+    // create_complex(16,0), create_complex(32,0)};
+
+    int n = 6;
+    
+    complex * p = malloc(sizeof(complex[n]));
+    for(int l = 0;l<n;l++){
+        p[l] = create_complex(pow(2,l),0);
+    }
+
+    fft(p,n);
+    print_fft(p,3);
+    // free(p);
+
+
     return 0;
 }
