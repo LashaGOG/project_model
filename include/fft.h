@@ -7,15 +7,15 @@
 #ifndef FFT
 #define FFT
 
-void fft_rec(complex * p, int n);
-void print_fft(complex* tab_fft, int n);
+void fft_rec(complex *p, int n);
+complex *fft(complex *p, int n);
 
+void ifft_rec(complex *p, int n);
+complex *ifft(complex *p, int n);
+
+void print_fft(complex *tab_fft, int n);
 int closest_power_of_two(int n);
-complex* fft(complex * p, int n);
 
-// void ifft_rec(complex * p, int n);
-// void ifft(complex * p, int n);
-
-
+complex *multiply_poly_fft(int *p1, int *p2, int n1, int n2);
 
 #endif // FFT
