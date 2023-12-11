@@ -37,9 +37,10 @@ int main()
         p[l] = create_complex(pow(2,l),0);
     }
 
-    fft(p,n);
-    print_fft(p,3);
-    // free(p);
+    p = fft(p,n);
+    int k = closest_power_of_two(n);
+    print_fft(p,k);
+    free(p);
 
 
     return 0;

@@ -11,7 +11,7 @@ void fft_rec(complex * p, int n);
 void print_fft(complex* tab_fft, int n);
 
 int closest_power_of_two(int n);
-void fft(complex * p, int n);
+complex* fft(complex * p, int n);
 
 // void ifft_rec(complex * p, int n);
 // void ifft(complex * p, int n);
