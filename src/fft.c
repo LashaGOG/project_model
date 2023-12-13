@@ -137,7 +137,7 @@ complex *ifft(complex *p, int n)
 
 /******************** FFT BASED MULTIPLICATION ********************/
 
-complex *multiply_poly_fft(int *p1, int *p2, int n1, int n2)
+int *multiply_poly_fft(int *p1, int *p2, int n1, int n2)
 {
     int n = closest_power_of_two(n1 + n2 - 1);
     // prepare polynoms for fft
@@ -170,7 +170,12 @@ complex *multiply_poly_fft(int *p1, int *p2, int n1, int n2)
         result[i] = multiply_complex(fft_p1[i], fft_p2[i]);
     }
 
-    complex *final_result = ifft(result, n);
+    complex *complex_result = ifft(result, n);
+
+    /* transform result to array of integers */
+    int *final_result = calloc(n, sizeof(int));
+    for (int i = 0; i < n; i++)
+        final_result[i] = complex_result[i].re;
 
     // free(result);
     // free(fft_p1);

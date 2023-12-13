@@ -52,7 +52,7 @@ int main()
     }
 
     int *p2 = malloc(sizeof(int[n]));
-    for (int l = 0; l < n - 1; l++)
+    for (int l = 0; l < n; l++)
     {
         p2[l] = pow(3, l);
     }
@@ -67,11 +67,8 @@ int main()
     printf("p1*p2 = ");
     print_polynom(multiply_naive, 2 * n - 1);
 
-    complex *multiply_fft = multiply_poly_fft(p1, p2, n, n);
-    for (int i = 0; i < 2 * n - 1; i++)
-    {
-        print_complex(multiply_fft[i]);
-    }
+    int *multiply_fft = multiply_poly_fft(p1, p2, n, n);
+    print_polynom(multiply_fft, 2 * n - 1);
 
     // free(p);
     // free(p2);
