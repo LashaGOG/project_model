@@ -16,6 +16,7 @@ complex create_complex(double re, double im)
 }
 
 // void delete_complex(complex z)
+// void delete_complex(complex z)
 // {
 //     free(z);
 // }

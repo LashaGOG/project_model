@@ -174,9 +174,9 @@ int *multiply_poly_fft(int *p1, int *p2, int n1, int n2)
     complex *complex_result = ifft(result, n);
 
     /* transform result to array of integers */
-    int *final_result = calloc(n, sizeof(int));
+    int *final_result = (int *)calloc(n, sizeof(int));
     for (int i = 0; i < n; i++)
-        final_result[i] = complex_result[i].re;
+        final_result[i] = round(complex_result[i].re);
 
     free(result);
     free(fft_p1);
