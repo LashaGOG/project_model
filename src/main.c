@@ -25,11 +25,7 @@ int main()
     // print_complex(div);
     // printf("%lf\n", norme_z2);
 
-    // complex P[] = {create_complex(5,0) , create_complex(3,0) , create_complex(2,0) , create_complex(1,0) };
-    // complex p[] = {create_complex(1,0), create_complex(2,0), create_complex(4,0), create_complex(8,0),
-    // create_complex(16,0), create_complex(32,0)};
-
-    int n = 6;
+    int n = 4;
 
     int *p1 = malloc(sizeof(int[n]));
     for (int l = 0; l < n; l++)
@@ -53,14 +49,34 @@ int main()
     printf("p1*p2 = ");
     print_polynom(multiply_naive, 2 * n - 1);
 
+    printf("multiply fft\n");
     complex *multiply_fft = multiply_poly_fft(p1, p2, n, n);
-    for (int i = 0; i < n + n - 1; i++)
+    for (int i = 0; i < n + n + 1; i++)
     {
         print_complex(multiply_fft[i]);
     }
 
     free(p1);
     free(p2);
+
+        
+    // int n = 6;
+
+    //     complex *p = malloc(sizeof(complex[n]));
+    //     // p[0] = create_complex(5,0);p[1] = create_complex(3,0); p[2] = create_complex(2,0);p[3] = create_complex(1,0);
+
+    //     for (int i = 0; i < n; i++)
+    //     {
+    //         p[i] = create_complex(pow(2, i), 0);
+    //     }
+
+    //     complex *fft_of_p = fft(p, n);
+
+    //     int k = closest_power_of_two(n);
+    //     print_fft(fft_of_p, k);
+
+    //     complex *ifft_of_p = ifft(fft_of_p, k);
+    //     print_fft(ifft_of_p, n);
 
     return 0;
 }

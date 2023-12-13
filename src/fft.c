@@ -84,13 +84,14 @@ void ifft_rec(complex *p, int n)
     for (int k = 0; k < n / 2; k++)
     {
         // only this two lines are different from fft_rec
-        complex omega = exp_complex(-2 * PI * k / n);
-        complex t = multiply_complex(divide_complex(omega, create_complex(n, 0)), po[k]);
+        complex omega = conjugate_complex(exp_complex(2 * PI * k / n));
+        complex t = multiply_complex(omega, po[k]);
         //
         p[k] = add_complex(pe[k], t);
         p[k + n / 2] = subtract_complex(pe[k], t);
     }
 }
+
 
 complex *ifft(complex *p, int n)
 {
@@ -117,8 +118,12 @@ complex *ifft(complex *p, int n)
         }
         ifft_rec(p, k); // Call the FFT on the new array
     }
+    // for (int i = 0; i < n; i++) {
+    //     p[i] = divide_complex(p[i], create_complex(n,0));
+    // }
     return p;
 }
+
 
 /******************** FFT BASED MULTIPLICATION ********************/
 
@@ -144,7 +149,7 @@ complex *multiply_poly_fft(int *p1, int *p2, int n1, int n2)
 
     complex *result = malloc((n1 + n2 + 1) * sizeof(complex));
 
-    for (int i = 0; i < n1 + n2 + 1; i++)
+    for (int i = 0; i < n1 + n2; i++)
     {
         result[i] = multiply_complex(fft_p1[i], fft_p2[i]);
     }
