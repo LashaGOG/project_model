@@ -29,10 +29,12 @@ int *naive_algo(int *p1, int *p2, int len1, int len2)
 void print_polynom(int *p, int len)
 {
     int i;
+    // printf("Len of the polynom = %d\n", len);
     // printf("Le polynôme est : \n");
     for (i = 0; i < len; i++)
     {
-        printf("%d*X^%d ", p[i], i);
+        if (p[i])
+            printf("%d*X^%d ", p[i], i);
     }
     printf("\n");
 }

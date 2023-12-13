@@ -17,7 +17,7 @@ typedef struct
 } complex;
 
 complex create_complex(double re, double im);
-// void delete_complex(complex* z);
+// void delete_complex(complex z);
 void print_complex(complex z);
 
 complex add_complex(complex z1, complex z2);

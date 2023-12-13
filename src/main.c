@@ -45,23 +45,23 @@ int main()
     //     complex *ifft_of_p = ifft(fft_of_p, 8);
     // print_fft(ifft_of_p, 6);
 
-    int *p1 = malloc(sizeof(int[n]));
+    int *p1 = calloc(1, sizeof(int[n]));
     for (int l = 0; l < n; l++)
     {
-        p1[l] = pow(2, l);
+        p1[l] = pow(3, l);
     }
 
-    int *p2 = malloc(sizeof(int[n]));
-    for (int l = 0; l < n; l++)
+    int *p2 = calloc(1, sizeof(int[n]));
+    for (int l = 0; l < n - 2; l++)
     {
-        p2[l] = pow(3, l);
+        p2[l] = pow(5, l);
     }
 
     printf("p1 = ");
     print_polynom(p1, n);
 
     printf("p2 = ");
-    print_polynom(p2, n - 1);
+    print_polynom(p2, n - 2);
 
     int *multiply_naive = naive_algo(p1, p2, n, n);
     printf("p1*p2 = ");
@@ -70,8 +70,10 @@ int main()
     int *multiply_fft = multiply_poly_fft(p1, p2, n, n);
     print_polynom(multiply_fft, 2 * n - 1);
 
-    // free(p);
-    // free(p2);
+    free(p1);
+    free(p2);
+    free(multiply_naive);
+    free(multiply_fft);
 
     return 0;
 }

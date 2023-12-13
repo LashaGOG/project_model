@@ -15,20 +15,13 @@ complex create_complex(double re, double im)
     return z;
 }
 
-// void delete_complex(complex *z)
+// void delete_complex(complex z)
 // {
 //     free(z);
 // }
 
 void print_complex(complex z)
 {
-
-    // if (z == NULL)
-    // {
-    //     printf("Le nombre complexe n'existe pas \n");
-    //     return;
-    // }
-
     if (z.re == 0 && z.im == 0)
         printf("%lf \n", z.re); // Si Re et Im sont nuls
 

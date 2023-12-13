@@ -141,8 +141,8 @@ int *multiply_poly_fft(int *p1, int *p2, int n1, int n2)
 {
     int n = closest_power_of_two(n1 + n2 - 1);
     // prepare polynoms for fft
-    complex *x = malloc(n * sizeof(complex));
-    complex *y = malloc(n * sizeof(complex));
+    complex *x = calloc(n, sizeof(complex));
+    complex *y = calloc(n, sizeof(complex));
 
     for (int i = 0; i < 0; i++)
     {
@@ -163,7 +163,7 @@ int *multiply_poly_fft(int *p1, int *p2, int n1, int n2)
     complex *fft_p1 = fft(x, n);
     complex *fft_p2 = fft(y, n);
 
-    complex *result = malloc(n * sizeof(complex));
+    complex *result = calloc(n, sizeof(complex));
 
     for (int i = 0; i < n; i++)
     {
@@ -177,9 +177,9 @@ int *multiply_poly_fft(int *p1, int *p2, int n1, int n2)
     for (int i = 0; i < n; i++)
         final_result[i] = complex_result[i].re;
 
-    // free(result);
-    // free(fft_p1);
-    // free(fft_p2);
+    free(result);
+    free(fft_p1);
+    free(fft_p2);
     // free(x);
     // free(y);
 
