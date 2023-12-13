@@ -48,20 +48,20 @@ int main()
     int *p1 = calloc(1, sizeof(int[n]));
     for (int l = 0; l < n; l++)
     {
-        p1[l] = pow(3, l);
+        p1[l] = pow(2, l);
     }
 
     int *p2 = calloc(1, sizeof(int[n]));
-    for (int l = 0; l < n - 2; l++)
+    for (int l = 0; l < n - 1; l++)
     {
-        p2[l] = pow(5, l);
+        p2[l] = pow(3, l);
     }
 
     printf("p1 = ");
     print_polynom(p1, n);
 
     printf("p2 = ");
-    print_polynom(p2, n - 2);
+    print_polynom(p2, n - 1);
 
     int *multiply_naive = naive_algo(p1, p2, n, n);
     printf("p1*p2 = ");
