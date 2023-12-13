@@ -16,6 +16,6 @@ complex *ifft(complex *p, int n);
 void print_fft(complex *tab_fft, int n);
 int closest_power_of_two(int n);
 
-complex *multiply_poly_fft(int *p1, int *p2, int n1, int n2);
+int *multiply_poly_fft(int *p1, int *p2, int n1, int n2);
 
 #endif // FFT

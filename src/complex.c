@@ -29,11 +29,15 @@ void print_complex(complex z)
     //     return;
     // }
 
-    if (z.re == 0 && z.im == 0)
+    if ( (z.re == 0) && (z.im == 0))
         printf("%lf \n", z.re); // Si Re et Im sont nuls
+    else if (z.im == 0){
+        printf("%lf \n", z.re);
+    }
 
-    else if (z.re == 0)
+    else if (z.re == 0){
         printf("%lf * i \n", z.im); // Si Re est nul
+    }
 
     else
     {
@@ -78,7 +82,7 @@ complex conjugate_complex(complex z1){
 complex divide_complex(complex z1, complex z2)
 {
 
-    if (z2.re == 0 && z2.im == 0)
+    if ((z2.re == 0) && (z2.im == 0))
     {
         fprintf(stderr, "Division by zero error\n");
         return create_complex(NAN, NAN);
@@ -98,6 +102,5 @@ double norm_complex(complex z)
 
 complex exp_complex(double theta)
 {
-    return create_complex(cos(theta),sin(theta));
+    return create_complex(cos(theta), sin(theta));
 }
-

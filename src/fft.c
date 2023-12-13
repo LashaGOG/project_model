@@ -66,13 +66,11 @@ complex *fft(complex *p, int n)
 
 void ifft_rec(complex *p, int n)
 {
-
     if (n <= 1)
         return;
 
     complex pe[n / 2];
     complex po[n / 2];
-
     for (int i = 0; i < n / 2; i++)
     {
         pe[i] = p[2 * i];
@@ -83,10 +81,8 @@ void ifft_rec(complex *p, int n)
 
     for (int k = 0; k < n / 2; k++)
     {
-        // only this two lines are different from fft_rec
-        complex omega = conjugate_complex(exp_complex(2 * PI * k / n));
-        complex t = multiply_complex(omega, po[k]);
-        //
+        // The only change is here: the minus sign in the exponent
+        complex t = multiply_complex(exp_complex(-2 * PI * k / n), po[k]);
         p[k] = add_complex(pe[k], t);
         p[k + n / 2] = subtract_complex(pe[k], t);
     }
@@ -95,44 +91,65 @@ void ifft_rec(complex *p, int n)
 
 complex *ifft(complex *p, int n)
 {
-    /* Give the FFT of a polynom whatever his size */
-
     if ((n & (n - 1)) == 0)
-    { // Condition if the polynom has a size equal to a power of 2
+    {
         ifft_rec(p, n);
+
+        for (int i = 0; i < n; i++)
+        {
+            p[i] = divide_complex(p[i], create_complex(n, 0));
+        }
     }
     else
     {
-        int k = closest_power_of_two(n);                     // Determines the closest power of 2 greater or equal
-        complex *p_resized = realloc(p, sizeof(complex[k])); // Enlarge the array
+        int k = closest_power_of_two(n);
+        ifft_rec(p, k);
+        complex *p_resized = realloc(p, sizeof(complex) * k);
         if (p_resized == NULL)
-        { // Check if the memory is allocated
-            printf("Échec de l'allocation\n");
+        {
+            printf("Allocation failure\n");
             exit(1);
         }
 
         p = p_resized;
         for (int i = n; i < k; i++)
-        { // Add 0 so the array is a size of a power of 2
+        {
             p[i] = create_complex(0, 0);
         }
-        ifft_rec(p, k); // Call the FFT on the new array
+        ifft_rec(p, k);
+        // printf("error\n");
+        // exit(1);
+
+        // int k = closest_power_of_two(n);
+        // printf("n = %d\n", n);
+        // printf("k = %d\n", k);
+        // ifft_rec(p, k);
+
+        // Scale the IFFT by the size
+        for (int i = 0; i < k; i++)
+        {
+            p[i] = divide_complex(p[i], create_complex(k, 0));
+        }
     }
-    // for (int i = 0; i < n; i++) {
-    //     p[i] = divide_complex(p[i], create_complex(n,0));
-    // }
+
     return p;
 }
 
 
 /******************** FFT BASED MULTIPLICATION ********************/
 
-complex *multiply_poly_fft(int *p1, int *p2, int n1, int n2)
+int *multiply_poly_fft(int *p1, int *p2, int n1, int n2)
 {
-
+    int n = closest_power_of_two(n1 + n2 - 1);
     // prepare polynoms for fft
-    complex *x = malloc(n1 * sizeof(complex));
-    complex *y = malloc(n2 * sizeof(complex));
+    complex *x = malloc(n * sizeof(complex));
+    complex *y = malloc(n * sizeof(complex));
+
+    for (int i = 0; i < 0; i++)
+    {
+        x[i] = create_complex(0, 0);
+        y[i] = create_complex(0, 0);
+    }
 
     for (int i = 0; i < n1; i++)
     {
@@ -144,17 +161,22 @@ complex *multiply_poly_fft(int *p1, int *p2, int n1, int n2)
     }
 
     // compute fft for each polynom with n > deg1 + deg2
-    complex *fft_p1 = fft(x, n1 + n2 + 1);
-    complex *fft_p2 = fft(y, n1 + n2 + 1);
+    complex *fft_p1 = fft(x, n);
+    complex *fft_p2 = fft(y, n);
 
-    complex *result = malloc((n1 + n2 + 1) * sizeof(complex));
+    complex *result = malloc(n * sizeof(complex));
 
-    for (int i = 0; i < n1 + n2; i++)
+    for (int i = 0; i < n; i++)
     {
         result[i] = multiply_complex(fft_p1[i], fft_p2[i]);
     }
 
-    complex *final_result = ifft(result, n1 + n2 + 1);
+    complex *complex_result = ifft(result, n);
+
+    /* transform result to array of integers */
+    int *final_result = calloc(n, sizeof(int));
+    for (int i = 0; i < n; i++)
+        final_result[i] = complex_result[i].re;
 
     // free(result);
     // free(fft_p1);
