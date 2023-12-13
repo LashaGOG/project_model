@@ -68,14 +68,12 @@ int main()
     print_polynom(p2, n2);
 
     int *multiply_naive = naive_algo(p1, p2, n1, n2);
-    int *multiply_naive = naive_algo(p1, p2, n1, n2);
     printf("p1*p2 = ");
     print_polynom(multiply_naive, n1 + n2 - 1);
 
     printf("La FFT multipliée \n");
     int *multiply_fft = multiply_poly_fft(p1, p2, n1, n2);
-    print_polynom(multiply_fft, n1+n2 - 1);
-
+    print_polynom(multiply_fft, n1 + n2 - 1);
 
     free(p1);
     free(p2);
