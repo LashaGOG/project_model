@@ -71,15 +71,16 @@ complex multiply_complex(complex z1, complex z2)
     return z;
 }
 
-// // complex* conjugate_complex(complex*z1){
-// //     complex* c = create_complex(z1->re, (-1)*z1->im);
-// //     return c;
-// // }
+complex conjugate_complex(complex z1)
+{
+    complex c = create_complex(z1.re, (-1) * z1.im);
+    return c;
+}
 
 complex divide_complex(complex z1, complex z2)
 {
 
-    if (z2.re + z2.im == 0)
+    if ((z2.re == 0) && (z2.im == 0))
     {
         fprintf(stderr, "Division by zero error\n");
         return create_complex(NAN, NAN);
@@ -99,6 +100,5 @@ double norm_complex(complex z)
 
 complex exp_complex(double theta)
 {
-    return create_complex(cos(theta),sin(theta));
+    return create_complex(cos(theta), sin(theta));
 }
-
