@@ -2,6 +2,7 @@
 #include "../include/complex.h"
 #include "../include/polynom.h"
 #include "../include/fft.h"
+#include "../include/tools.h"
 
 /* AUTHORS : TAN Philippe
              GOGRITCHIANI Lasha
@@ -10,75 +11,31 @@
 
 int main()
 {
-    // complex z1 = create_complex(1.0, 2.0);
-    // complex z2 = create_complex(3.0, 4.0);
 
-    // complex sum = add_complex(z1, z2);
-    // complex sub = subtract_complex(z1, z2);
-    // complex mul = multiply_complex(z1, z2);
-    // complex div = divide_complex(z1, z2);
-    // double norme_z2 = norm_complex(z2);
+    int n = 5;
+    int *p1 = random_polynom(n, 1, 50);
+    int *p2 = random_polynom(n, 1, 50);
 
-    // print_complex(sum);
-    // print_complex(sub);
-    // print_complex(mul);
-    // print_complex(div);
-    // printf("%lf\n", norme_z2);
+    printf("P1 = ");
+    print_polynom(p1, n);
 
-    // complex P[] = {create_complex(5,0) , create_complex(3,0) , create_complex(2,0) , create_complex(1,0) };
-    // complex p[] = {create_complex(1,0), create_complex(2,0), create_complex(4,0), create_complex(8,0),
-    // create_complex(16,0), create_complex(32,0)};
+    printf("P2 = ");
+    print_polynom(p2, n);
 
+    double exec_time_naive = measure_execution_time(p1, p2, n, n, 0);
+    double exec_time_fft = measure_execution_time(p1, p2, n, n, 1);
 
-    // complex *p = malloc(sizeof(complex[n]));
+    printf("execution time for naive algo = %lfs\n", exec_time_naive);
+    printf("execution time for fft based algo = %lfs\n", exec_time_fft);
 
-    // for (int i = 0; i < n; i++)
-    // {
-    //     p[i] = create_complex(pow(2, i), 0);
-    // }
+    int max_size_naive = find_max_instance_size(0);
+    printf("Maximum instance size for naive multiplication algorithm found : %d\n", max_size_naive);
 
-    // complex *fft_of_p = fft(p, n);
-
-    // print_fft(fft_of_p, 8);
-
-    //     complex *ifft_of_p = ifft(fft_of_p, 8);
-    // print_fft(ifft_of_p, 6);
-
-
-    int n1 = 4;
-    int n2 = 10;
-
-    int *p1 = calloc(1, sizeof(int[n1]));
-    for (int l = 0; l < n1; l++)
-    {
-        p1[l] = pow(2, l);
-    }
-
-    int *p2 = calloc(1, sizeof(int[n2]));
-    for (int l = 0; l < n2 ; l++)
-    {
-        p2[l] = pow(3, l);
-    }
-    printf("p1 = ");
-    print_polynom(p1, n1);
-    print_polynom(p1, n1);
-
-    printf("p2 = ");
-    print_polynom(p2, n2);
-    print_polynom(p2, n2);
-
-    int *multiply_naive = naive_algo(p1, p2, n1, n2);
-    printf("p1*p2 = ");
-    print_polynom(multiply_naive, n1 + n2 - 1);
-
-    printf("La FFT multipliée \n");
-    int *multiply_fft = multiply_poly_fft(p1, p2, n1, n2);
-    print_polynom(multiply_fft, n1 + n2 - 1);
+    int max_size_fft = find_max_instance_size(1);
+    printf("Maximum instance size for fft based multiplication algorithm found : %d\n", max_size_fft);
 
     free(p1);
     free(p2);
-    free(multiply_naive);
-    free(multiply_fft);
 
     return 0;
 }
