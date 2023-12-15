@@ -68,6 +68,65 @@ int find_max_instance_size(int algo)
     return max_n;
 }
 
+void measure_execution_time_mean_algos(int size, int number, double * t_naive, double * t_fft)
+{
+    /*  calcul le temps d'éxécution moyen sur number instances pour l'aglo naif et l'algo fft de multiplication 
+     *  de deux polynômes de taille size. le temps d'éxécution pour chaque algo est calculé sur la même instance
+     */
+
+    int *p1, *p2;
+    // double * tab_res = malloc(sizeof(double[2]));
+    double time_naive = 0.0;
+    double time_fft = 0.0;
+  
+    for(int i = 0;i<number;i++) {
+        p1 = random_polynom(size,0,100);
+        p2 = random_polynom(size,0,100);
+        time_naive += measure_execution_time(p1,p2,size,size,0);
+        time_fft += measure_execution_time(p1,p2,size,size,1);
+        free(p1);
+        free(p2);
+    }
+    * t_naive = (double) time_naive / number;
+    * t_fft = (double) time_fft / number;
+}
+
+
+void mean_execution_time_algos(int number, int N_max, int div, double * tab_time_naive, double * tab_time_fft)
+{
+    /*  fill the array tab_time and tab_sizes with the mean execution time for every sizes between 
+     *  N_max / div and N_max for both algorithm
+     */
+
+    double t_naive = 0.0;
+    double t_fft = 0.0;
+    int k = N_max/div ;     //Evite de faire le calcul à chaque itération
+  
+    for(int i = 1;i*k <= N_max;i++) {
+        measure_execution_time_mean_algos(i*N_max/div,number,&t_naive,&t_fft);
+        tab_time_naive[i-1] = t_naive;
+        tab_time_fft[i-1] = t_fft;
+
+        // * tab_sizes[i-1] = i*N_max/div;
+    }
+   
+}
+
+
+
+
+
+// FILE *file = fopen("resultats_temps.csv", "w");
+// if (file == NULL) {
+//     perror("Erreur à l'ouverture du fichier");
+//     return 1;
+// }
+
+// // Dans votre boucle ou fonction de mesure
+// fprintf(file, "%d, %f\n", taille_polynome, temps_execution);
+
+// fclose(file);
+
 
 double measure_execution_time_mean(int algo, int size, int number)
 {
@@ -92,74 +151,35 @@ double measure_execution_time_mean(int algo, int size, int number)
     return (double) val / number;
 }
 
-void measure_execution_time_mean_algos(int size, int number, double * t_naive, double * t_fft)
-{
-    /*  retourne un tableau contenant la moyenne de chaque algo sur number instances du temps d'éxécution moyen pour 
-     *  la multiplication de deux mêmes polynômes. l'élément d'indice 0 correspond à l'algorithme naïf, 
-     *  l'élément d'indice 1 correspond à l'algorithme fft
-     */
-
-    int *p1, *p2;
-    // double * tab_res = malloc(sizeof(double[2]));
-    double time_naive, time_fft = 0;
-  
-    for(int i = 0;i<number;i++) {
-        p1 = random_polynom(size,0,100);
-        p2 = random_polynom(size,0,100);
-        time_naive += measure_execution_time(p1,p2,size,size,0);
-        time_fft += measure_execution_time(p1,p2,size,size,1);
-        free(p1);
-        free(p2);
-    }
-    * t_naive = (double) time_naive / number;
-    * t_fft = (double) time_fft / number;
-}
-
 int find_critical_size()
 {
     /* find the size of polynom for which fft multiplication algorithm starts to be faster than naive multiplication */
     int max_n = 10;
-    double t_naive,t_fft;
+    double t_naive;
+    double t_fft;
 
-    printf("Looking for the size for which fft is faster....\n");
+    // printf("Looking for the size for which fft is faster....\n");
     do
     {
         measure_execution_time_mean_algos(max_n,20,&t_naive,&t_fft);
         max_n += 10;
         printf("n = %d exec_time_naive = %lf, exec_time_fft = %lf \n", max_n, t_naive,t_fft);
-
-    } while (t_naive < t_fft);
-    printf("Critical size found\n");
-
+    }while (t_naive < t_fft);
+        // printf("t_naive = %lf t_fft = %lf\n", t_naive, t_fft);
+    // printf("Critical size found\n");
+    // printf("Valeur de max_n = %d \n",max_n);
     return max_n;
 }
 
-
-void mean_execution_time_algos(int number, int N_max, int div, double ** tab_time_naive, double ** tab_time_fft)
-{
-    /*  fill the array tab_time and tab_sizes with the mean execution time for every sizes between 
-     *  N_max / div and N_max for both algorithm
-     */
-
-    double t_naive,t_fft;
-  
-    for(int i = 1;i*N_max/div < N_max;i++) {
-        measure_execution_time_mean_algos(i*N_max/div,number,&t_naive,&t_fft);
-        * tab_time_naive[i-1] = t_naive;
-        * tab_time_fft[i-1] = t_fft;
-
-        // * tab_sizes[i-1] = i*N_max/div;
+int find_critical_size_mean(){
+    /*donne en moyenne sur 50 instances la taille de polynôme pour laquelle la fft devient plus rapide*/
+    int val = 0;    
+    for(int i = 0;i<10;i++){
+        val += find_critical_size();
+        // printf("%d , valeur : %d \n",i,val);
     }
-   
+    int critical_size = val / 10;
+    printf("Critical size : %d\n", critical_size);
+    return critical_size;
+
 }
-
-// FILE *file = fopen("resultats_temps.csv", "w");
-// if (file == NULL) {
-//     perror("Erreur à l'ouverture du fichier");
-//     return 1;
-// }
-
-// // Dans votre boucle ou fonction de mesure
-// fprintf(file, "%d, %f\n", taille_polynome, temps_execution);
-
-// fclose(file);

@@ -32,8 +32,28 @@ int main()
     // int max_size_fft = find_max_instance_size(1);
     // printf("Maximum instance size for fft based multiplication algorithm found : %d\n", max_size_fft);
 
-    int critical_size = find_critical_size();
-    printf("The size for which fft multiplication become faster is : %d \n", critical_size);
+    // int critical_size = find_critical_size();
+    // printf("The size for which fft multiplication become faster is : %d \n", critical_size);
+
+    /*Création des tableaux de données pour tracer les courbes de temps d'éxécution moyen*/
+    int div = 20;
+    int number = 10;
+    int N_max = 30000;
+    double * tab_time_naive = calloc(div, sizeof(double));
+    double * tab_time_fft = calloc(div, sizeof(double));
+
+    mean_execution_time_algos(number,N_max,div,tab_time_naive,tab_time_fft);
+
+    for (int i =0;i<div;i++){
+        printf("i = %d \n", i+1);
+        printf("time naive = %lf \n", tab_time_naive[i]);
+        printf("time fft = %lf \n", tab_time_fft[i]);
+    }
+
+    free(tab_time_naive);
+    free(tab_time_fft);
+    /*Fin */
+
 
     free(p1);
     free(p2);

@@ -17,6 +17,8 @@ int find_max_instance_size(int algo);
 double measure_execution_time_mean(int algo, int size, int number);
 void measure_execution_time_mean_algos(int size, int number, double * t_naive, double * t_fft);
 int find_critical_size();
-void mean_execution_time_algos(int number, int N_max, int div, double ** tab_time_naive, double ** tab_time_fft);
+int find_critical_size_mean();
+void mean_execution_time_algos(int number, int N_max, int div, double * tab_time_naive, double * tab_time_fft);
+
 
 #endif // TOOLS
