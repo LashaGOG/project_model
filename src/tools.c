@@ -68,7 +68,7 @@ int find_max_instance_size(int algo)
     return max_n;
 }
 
-void measure_execution_time_mean_algos(int size, int number, double * t_naive, double * t_fft)
+void measure_execution_time_mean(int size, int number, double * t_naive, double * t_fft)
 {
     /*  calcul le temps d'éxécution moyen sur number instances pour l'aglo naif et l'algo fft de multiplication 
      *  de deux polynômes de taille size. le temps d'éxécution pour chaque algo est calculé sur la même instance
@@ -127,29 +127,6 @@ void mean_execution_time_algos(int number, int N_max, int div, double * tab_time
 
 // fclose(file);
 
-
-double measure_execution_time_mean(int algo, int size, int number)
-{
-    /*  return the mean execution time of the multiplication(for a given algorithm) of polynoms of size size 
-     *  algo = 0, execute naive multiplication algorithm
-     *  algo = 1, fft_based multiplication
-     *  the mean is calculated on number differents array of polynom coefficients
-     */
-
-    int *p1, *p2;
-    double val = 0;
-  
-    for(int i = 0;i<number;i++) {
-        p1 = random_polynom(size,0,100);
-        p2 = random_polynom(size,0,100);
-        val += measure_execution_time(p1,p2,size,size,algo);
-    }
-
-    if (p1) free(p1);
-    if (p2) free(p2);
-    
-    return (double) val / number;
-}
 
 int find_critical_size()
 {
