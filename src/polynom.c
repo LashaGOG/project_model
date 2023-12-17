@@ -47,7 +47,7 @@ void delete_polynom(int *p)
 int generate_random_real(int a, int b)
 {
     // Génère un réel aléatoire entre a et b
-    return a + ((int)rand() / RAND_MAX) * (b - a);
+    return a + ((double)rand() / RAND_MAX) * (b - a);
 }
 
 int *random_polynom(int deg, int a, int b)

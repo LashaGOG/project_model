@@ -55,15 +55,43 @@ int find_max_instance_size(int algo)
     printf("Searching the max instance size...\n");
     do
     {
-        p1 = random_polynom(max_n, 1, 100);
-        p2 = random_polynom(max_n, 1, 100);
+        p1 = random_polynom(max_n, 0, 100);
+        p2 = random_polynom(max_n, 0, 100);
         exec_time = measure_execution_time(p1, p2, max_n, max_n, algo);
         max_n += 1000;
         printf("n = %d exec_time = %lf\n", max_n, exec_time);
         free(p1);
         free(p2);
-    } while (exec_time < 0.5);
+    } while (exec_time < 1);
     printf("Max instance size found\n");
 
     return max_n;
+}
+
+int *generate_tab_sizes(int max_size, int nb_sizes)
+{
+    /* cut max_size in nb_sizes even parts and return sizes as an array */
+    int *sizes = (int *)calloc(nb_sizes, sizeof(int));
+    for (int i = 1; i < nb_sizes + 1; i++)
+    {
+        sizes[i - 1] = i * (max_size / nb_sizes);
+    }
+    return sizes;
+}
+
+// double *compute_mean_exec_time(int *tab_sizes, int nb_sizes, int n)
+// {
+//     /* menerate mean execution time for each algorithm */
+//     double *mean_exec_times = (double *)calloc(nb_sizes, sizeof(double));
+// }
+
+void arrays_to_file(int *sizes, int nb_sizes, double *t_naive, double *t_fft)
+{
+    FILE *fptr;
+    fptr = fopen("exec_times.txt", "w");
+    for (int i = 0; i < nb_sizes; i++)
+    {
+        fprintf(fptr, "%d %lf %lf\n", sizes[i], t_naive[i], t_fft[i]);
+    }
+    fclose(fptr);
 }
