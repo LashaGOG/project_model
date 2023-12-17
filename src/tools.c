@@ -13,6 +13,7 @@ double measure_execution_time(int *p1, int *p2, int n1, int n2, int algo)
      *  algo = 0, execute naive multiplication algorithm
      *  algo = 1, fft_based multiplication
      */
+
     clock_t start, end;
     int *p;
     if (algo == 0)
@@ -39,10 +40,11 @@ double measure_execution_time(int *p1, int *p2, int n1, int n2, int algo)
 }
 
 /* hi */
-int find_max_instance_size(int algo)
+int find_max_size(int algo)
 {
-    /* return the size of instance for which execution of given algorithm and graph generation time exceeds 1s */
-    int max_n = 1000;
+    /* Returns the size of the polynom for which the execution time of the given algorithm exceeds 1s */
+
+    int max_n = 1000;       
     double exec_time = 0;
     int *p1, *p2;
 
@@ -57,13 +59,14 @@ int find_max_instance_size(int algo)
     {
         p1 = random_polynom(max_n, 0, 100);
         p2 = random_polynom(max_n, 0, 100);
-        p1 = random_polynom(max_n, 0, 100);
-        p2 = random_polynom(max_n, 0, 100);
         exec_time = measure_execution_time(p1, p2, max_n, max_n, algo);
-        max_n += 1000;
+
+        max_n += 1000;      // Increase the polynomial size by 1000 for testing the next iteration
+
         printf("n = %d exec_time = %lf\n", max_n, exec_time);
         free(p1);
         free(p2);
+
     } while (exec_time < 1);
     printf("Max instance size found\n");
 
@@ -72,24 +75,29 @@ int find_max_instance_size(int algo)
 
 void measure_execution_time_mean(int size, int number, double * t_naive, double * t_fft)
 {
-    /*  calcul le temps d'éxécution moyen sur number instances pour l'aglo naif et l'algo fft de multiplication 
-     *  de deux polynômes de taille size. le temps d'éxécution pour chaque algo est calculé sur la même instance
-     */
+    /*  Calculates the average execution time over number instances for both the naive algorithm and 
+    *   the FFT algorithm for multiplying two polynomials of size 'size'. 
+    *   The execution time for each algorithm is calculated on the same instance.
+    */
 
     int *p1, *p2;
-    // double * tab_res = malloc(sizeof(double[2]));
     double time_naive = 0.0;
     double time_fft = 0.0;
   
-    for(int i = 0;i<number;i++) {
+    for(int i = 0; i < number; i++) {
         p1 = random_polynom(size,0,100);
         p2 = random_polynom(size,0,100);
-        time_naive += measure_execution_time(p1,p2,size,size,0);
+
+        //Adding the time execution of each execution on random polynoms
+        // time_naive += measure_execution_time(p1,p2,size,size,0);
         time_fft += measure_execution_time(p1,p2,size,size,1);
+
         free(p1);
         free(p2);
     }
-    * t_naive = (double) time_naive / number;
+
+    //Calculating the mean value of those times
+    // * t_naive = (double) time_naive / number;
     * t_fft = (double) time_fft / number;
 }
 
@@ -102,27 +110,34 @@ void mean_execution_time_algos(int number, int N_max, int div, int * tab_sizes, 
 
     double t_naive = 0.0;
     double t_fft = 0.0;
-    int k = N_max/div ;     //Evite de faire le calcul à chaque itération
+    int k = N_max/div ;     // Avoids recalculating at each iteration
   
     for(int i = 1;i*k <= N_max;i++) {
-        measure_execution_time_mean(i*N_max/div,number,&t_naive,&t_fft);
-        tab_time_naive[i-1] = t_naive;
+
+        measure_execution_time_mean(i*k,number,&t_naive,&t_fft);
+
+        //Fill the array of times executions and sizes on which we apply our both algorithms
+        // tab_time_naive[i-1] = t_naive;
         tab_time_fft[i-1] = t_fft;
         tab_sizes[i-1] = i*k;
     }
-   
 }
 
-// FILE *file = fopen("resultats_temps.csv", "w");
-// if (file == NULL) {
-//     perror("Erreur à l'ouverture du fichier");
-//     return 1;
-// }
+void mean_exec_time_2(int number, int N_max, int div, int * tab_sizes, double * tab_time_naive, double * tab_time_fft)
+{
+    /*Similar to mean_execution_time_algos, but this function only considers polynomial sizes that are powers of 2*/
 
-// // Dans votre boucle ou fonction de mesure
-// fprintf(file, "%d, %f\n", taille_polynome, temps_execution);
+    double t_naive = 0.0;
+    double t_fft = 0.0;
+  
+    for(int i = 0; pow(2,i) <= N_max;i++) {
 
-// fclose(file);
+        measure_execution_time_mean(pow(2,i),number,&t_naive,&t_fft);
+        // tab_time_naive[i-1] = t_naive;
+        tab_time_fft[i] = t_fft;
+        tab_sizes[i] = pow(2,i);
+    }
+}
 
 
 int find_critical_size()
@@ -165,6 +180,9 @@ int find_critical_size_mean(){
 // }
 
 void arrays_to_file(int div, int * tab_sizes, double *tab_time_naive, double *tab_time_fft)
+
+    /*Converts the data arrays into a file. Overwrites the existing file with each new call*/
+
 {
     FILE *fptr;
     fptr = fopen("exec_times.txt", "w");

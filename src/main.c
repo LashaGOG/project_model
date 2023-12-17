@@ -69,20 +69,15 @@ int main()
     // printf("The size for which fft multiplication become faster is : %d \n", critical_size);
 
     /*Création des tableaux de données pour tracer les courbes de temps d'éxécution moyen*/
-    int div = 15;
-    int number = 5;
-    int N_max = 10000;
+    int div = 16;
+    int number = 20;
+    int N_max = 40000;
     double * tab_time_naive = calloc(div, sizeof(double));
     double * tab_time_fft = calloc(div, sizeof(double));
     int * tab_sizes = malloc(sizeof(int[div]));
 
-    mean_execution_time_algos(number,N_max,div,tab_sizes,tab_time_naive,tab_time_fft);
-
-    // for (int i =0;i<div;i++){
-    //     printf("i = %d \n", i+1);
-    //     printf("time naive = %lf \n", tab_time_naive[i]);
-    //     printf("time fft = %lf \n", tab_time_fft[i]);
-    // }
+    // mean_execution_time_algos(number,N_max,div,tab_sizes,tab_time_naive,tab_time_fft);
+    mean_exec_time_2(number,N_max,div,tab_sizes,tab_time_naive,tab_time_fft);
 
     arrays_to_file(div,tab_sizes,tab_time_naive,tab_time_fft);
 
@@ -90,7 +85,6 @@ int main()
     free(tab_time_fft);
     free(tab_sizes);
     /*Fin */
-
 
     free(p1);
     free(p2);
