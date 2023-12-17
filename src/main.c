@@ -28,24 +28,24 @@ int main()
     // // Philippe : n =
 
     /******************** OTHER TESTS ********************/
-    int max_size = 10000;
-    int nb_sizes = 5;
-    int *sizes = generate_tab_sizes(max_size, nb_sizes);
 
-    for (int i = 0; i < nb_sizes; i++)
-    {
-        printf("%d ", sizes[i]);
-    }
-    printf("\n");
+    // int max_size = 10000;
+    // int nb_sizes = 5;
+    // int *sizes = generate_tab_sizes(max_size, nb_sizes);
 
-    double t_naive[5] = {1.0, 2.0, 3.0, 4.0, 5.0};
-    double t_fft[5] = {6.0, 7.0, 8.0, 9.0, 10.0};
+    // for (int i = 0; i < nb_sizes; i++)
+    // {
+    //     printf("%d ", sizes[i]);
+    // }
+    // printf("\n");
 
-    arrays_to_file(sizes, nb_sizes, t_naive, t_fft);
+    // double t_naive[5] = {1.0, 2.0, 3.0, 4.0, 5.0};
+    // double t_fft[5] = {6.0, 7.0, 8.0, 9.0, 10.0};
 
-    free(sizes);
+    // arrays_to_file(sizes, nb_sizes, t_naive, t_fft);
 
-    srand(time(NULL));
+    // free(sizes);
+
 
     int n = 5;
     int *p1 = random_polynom(n, 1, 100);
@@ -69,22 +69,26 @@ int main()
     // printf("The size for which fft multiplication become faster is : %d \n", critical_size);
 
     /*Création des tableaux de données pour tracer les courbes de temps d'éxécution moyen*/
-    int div = 20;
-    int number = 10;
-    int N_max = 30000;
+    int div = 15;
+    int number = 5;
+    int N_max = 10000;
     double * tab_time_naive = calloc(div, sizeof(double));
     double * tab_time_fft = calloc(div, sizeof(double));
+    int * tab_sizes = malloc(sizeof(int[div]));
 
-    mean_execution_time_algos(number,N_max,div,tab_time_naive,tab_time_fft);
+    mean_execution_time_algos(number,N_max,div,tab_sizes,tab_time_naive,tab_time_fft);
 
-    for (int i =0;i<div;i++){
-        printf("i = %d \n", i+1);
-        printf("time naive = %lf \n", tab_time_naive[i]);
-        printf("time fft = %lf \n", tab_time_fft[i]);
-    }
+    // for (int i =0;i<div;i++){
+    //     printf("i = %d \n", i+1);
+    //     printf("time naive = %lf \n", tab_time_naive[i]);
+    //     printf("time fft = %lf \n", tab_time_fft[i]);
+    // }
+
+    arrays_to_file(div,tab_sizes,tab_time_naive,tab_time_fft);
 
     free(tab_time_naive);
     free(tab_time_fft);
+    free(tab_sizes);
     /*Fin */
 
 

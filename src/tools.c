@@ -65,7 +65,6 @@ int find_max_instance_size(int algo)
         free(p1);
         free(p2);
     } while (exec_time < 1);
-    } while (exec_time < 1);
     printf("Max instance size found\n");
 
     return max_n;
@@ -95,7 +94,7 @@ void measure_execution_time_mean(int size, int number, double * t_naive, double 
 }
 
 
-void mean_execution_time_algos(int number, int N_max, int div, double * tab_time_naive, double * tab_time_fft)
+void mean_execution_time_algos(int number, int N_max, int div, int * tab_sizes, double * tab_time_naive, double * tab_time_fft)
 {
     /*  fill the array tab_time and tab_sizes with the mean execution time for every sizes between 
      *  N_max / div and N_max for both algorithm
@@ -106,18 +105,13 @@ void mean_execution_time_algos(int number, int N_max, int div, double * tab_time
     int k = N_max/div ;     //Evite de faire le calcul à chaque itération
   
     for(int i = 1;i*k <= N_max;i++) {
-        measure_execution_time_mean_algos(i*N_max/div,number,&t_naive,&t_fft);
+        measure_execution_time_mean(i*N_max/div,number,&t_naive,&t_fft);
         tab_time_naive[i-1] = t_naive;
         tab_time_fft[i-1] = t_fft;
-
-        // * tab_sizes[i-1] = i*N_max/div;
+        tab_sizes[i-1] = i*k;
     }
    
 }
-
-
-
-
 
 // FILE *file = fopen("resultats_temps.csv", "w");
 // if (file == NULL) {
@@ -141,7 +135,7 @@ int find_critical_size()
     // printf("Looking for the size for which fft is faster....\n");
     do
     {
-        measure_execution_time_mean_algos(max_n,20,&t_naive,&t_fft);
+        measure_execution_time_mean(max_n,20,&t_naive,&t_fft);
         max_n += 10;
         printf("n = %d exec_time_naive = %lf, exec_time_fft = %lf \n", max_n, t_naive,t_fft);
     }while (t_naive < t_fft);
@@ -164,30 +158,19 @@ int find_critical_size_mean(){
 
 }
 
-int *generate_tab_sizes(int max_size, int nb_sizes)
-{
-    /* cut max_size in nb_sizes even parts and return sizes as an array */
-    int *sizes = (int *)calloc(nb_sizes, sizeof(int));
-    for (int i = 1; i < nb_sizes + 1; i++)
-    {
-        sizes[i - 1] = i * (max_size / nb_sizes);
-    }
-    return sizes;
-}
-
 // double *compute_mean_exec_time(int *tab_sizes, int nb_sizes, int n)
 // {
 //     /* menerate mean execution time for each algorithm */
 //     double *mean_exec_times = (double *)calloc(nb_sizes, sizeof(double));
 // }
 
-void arrays_to_file(int *sizes, int nb_sizes, double *t_naive, double *t_fft)
+void arrays_to_file(int div, int * tab_sizes, double *tab_time_naive, double *tab_time_fft)
 {
     FILE *fptr;
     fptr = fopen("exec_times.txt", "w");
-    for (int i = 0; i < nb_sizes; i++)
+    for (int i = 0; i < div; i++)
     {
-        fprintf(fptr, "%d %lf %lf\n", sizes[i], t_naive[i], t_fft[i]);
+        fprintf(fptr, "%d %lf %lf\n", tab_sizes[i], tab_time_naive[i], tab_time_fft[i]);
     }
     fclose(fptr);
 }

@@ -17,10 +17,8 @@ int find_max_instance_size(int algo);
 void measure_execution_time_mean(int size, int number, double * t_naive, double * t_fft);
 int find_critical_size();
 int find_critical_size_mean();
-void mean_execution_time_algos(int number, int N_max, int div, double * tab_time_naive, double * tab_time_fft);
+void mean_execution_time_algos(int number, int N_max, int div, int * tab_sizes, double * tab_time_naive, double * tab_time_fft);
 
-int *generate_tab_sizes(int max_size, int nb_sizes);
-
-void arrays_to_file(int *sizes, int nb_sizes, double *t_naive, double *t_fft);
+void arrays_to_file(int div, int * tab_sizes, double *tab_time_naive, double *tab_time_fft);
 
 #endif // TOOLS
