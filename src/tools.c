@@ -63,12 +63,12 @@ int find_max_size(int algo)
 
         max_n += 1000;      // Increase the polynomial size by 1000 for testing the next iteration
 
-        printf("n = %d exec_time = %lf\n", max_n, exec_time);
+        // printf("n = %d exec_time = %lf\n", max_n, exec_time);
         free(p1);
         free(p2);
 
     } while (exec_time < 1);
-    printf("Max instance size found\n");
+    printf("Max instance size found n = %d, exec_time = %lf\n", max_n, exec_time);
 
     return max_n;
 }
@@ -89,7 +89,7 @@ void measure_execution_time_mean(int size, int number, double * t_naive, double 
         p2 = random_polynom(size,0,100);
 
         //Adding the time execution of each execution on random polynoms
-        // time_naive += measure_execution_time(p1,p2,size,size,0);
+        time_naive += measure_execution_time(p1,p2,size,size,0);
         time_fft += measure_execution_time(p1,p2,size,size,1);
 
         free(p1);
@@ -97,7 +97,7 @@ void measure_execution_time_mean(int size, int number, double * t_naive, double 
     }
 
     //Calculating the mean value of those times
-    // * t_naive = (double) time_naive / number;
+    * t_naive = (double) time_naive / number;
     * t_fft = (double) time_fft / number;
 }
 
@@ -117,13 +117,13 @@ void mean_execution_time_algos(int number, int N_max, int div, int * tab_sizes, 
         measure_execution_time_mean(i*k,number,&t_naive,&t_fft);
 
         //Fill the array of times executions and sizes on which we apply our both algorithms
-        // tab_time_naive[i-1] = t_naive;
+        tab_time_naive[i-1] = t_naive;
         tab_time_fft[i-1] = t_fft;
         tab_sizes[i-1] = i*k;
     }
 }
 
-void mean_exec_time_2(int number, int N_max, int div, int * tab_sizes, double * tab_time_naive, double * tab_time_fft)
+void mean_exec_time_2(int number,int N_max, int * tab_sizes, double * tab_time_naive, double * tab_time_fft)
 {
     /*Similar to mean_execution_time_algos, but this function only considers polynomial sizes that are powers of 2*/
 
@@ -133,12 +133,11 @@ void mean_exec_time_2(int number, int N_max, int div, int * tab_sizes, double * 
     for(int i = 0; pow(2,i) <= N_max;i++) {
 
         measure_execution_time_mean(pow(2,i),number,&t_naive,&t_fft);
-        // tab_time_naive[i-1] = t_naive;
+        tab_time_naive[i-1] = t_naive;
         tab_time_fft[i] = t_fft;
         tab_sizes[i] = pow(2,i);
     }
 }
-
 
 int find_critical_size()
 {
