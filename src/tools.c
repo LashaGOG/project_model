@@ -123,17 +123,17 @@ void mean_execution_time_algos(int number, int N_max, int div, int * tab_sizes, 
     }
 }
 
-void mean_exec_time_2(int number,int N_max, int * tab_sizes, double * tab_time_naive, double * tab_time_fft)
+void mean_exec_time_pow(int number, int size, int * tab_sizes, double * tab_time_naive, double * tab_time_fft)
 {
     /*Similar to mean_execution_time_algos, but this function only considers polynomial sizes that are powers of 2*/
 
     double t_naive = 0.0;
     double t_fft = 0.0;
   
-    for(int i = 0; pow(2,i) <= N_max;i++) {
+    for(int i = 0; i < size;i++) {
 
         measure_execution_time_mean(pow(2,i),number,&t_naive,&t_fft);
-        tab_time_naive[i-1] = t_naive;
+        tab_time_naive[i] = t_naive;
         tab_time_fft[i] = t_fft;
         tab_sizes[i] = pow(2,i);
     }
@@ -178,14 +178,14 @@ int find_critical_size_mean(){
 //     double *mean_exec_times = (double *)calloc(nb_sizes, sizeof(double));
 // }
 
-void arrays_to_file(int div, int * tab_sizes, double *tab_time_naive, double *tab_time_fft)
+void arrays_to_file(int size, int * tab_sizes, double *tab_time_naive, double *tab_time_fft)
 
     /*Converts the data arrays into a file. Overwrites the existing file with each new call*/
 
 {
     FILE *fptr;
     fptr = fopen("exec_times.txt", "w");
-    for (int i = 0; i < div; i++)
+    for (int i = 0; i < size; i++)
     {
         fprintf(fptr, "%d %lf %lf\n", tab_sizes[i], tab_time_naive[i], tab_time_fft[i]);
     }

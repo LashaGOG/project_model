@@ -28,17 +28,25 @@ int main()
     // /******************** End ********************/
 
     /*Création des tableaux de données pour tracer les courbes de temps d'éxécution moyen*/
+
+    //Créer un tableau de données tailles quelconques
     int number = 15;
-    int N_max = 25000;
+    int N_max = 35000;//25000;
     int div = 25;
-    double * tab_time_naive = calloc(div, sizeof(double));
-    double * tab_time_fft = calloc(div, sizeof(double));
-    int * tab_sizes = malloc(sizeof(int[div]));
+    // double * tab_time_naive = calloc(div, sizeof(double));
+    // double * tab_time_fft = calloc(div, sizeof(double));
+    // int * tab_sizes = malloc(sizeof(int[div]));
 
-    mean_execution_time_algos(number,N_max,div,tab_sizes,tab_time_naive,tab_time_fft);
-    // mean_exec_time_2(number,N_max,tab_sizes,tab_time_naive,tab_time_fft);
+    //Créer un tableau de données des puissances de 2
+    int size = 16;
+    double * tab_time_naive = calloc(size, sizeof(double));
+    double * tab_time_fft = calloc(size, sizeof(double));
+    int * tab_sizes = malloc(sizeof(int[size]));
 
-    arrays_to_file(div,tab_sizes,tab_time_naive,tab_time_fft);
+    // mean_execution_time_algos(number,N_max,div,tab_sizes,tab_time_naive,tab_time_fft);
+    mean_exec_time_pow(number,size,tab_sizes,tab_time_naive,tab_time_fft);
+
+    arrays_to_file(size,tab_sizes,tab_time_naive,tab_time_fft);
 
     free(tab_time_naive);
     free(tab_time_fft);

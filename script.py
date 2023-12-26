@@ -45,6 +45,7 @@ plt.xlabel("Taille du polynôme")
 plt.ylabel("Temps d'éxécution moyen")
 plt.title("Temps d'éxécution moyen de l'algorithme fft")
 
+
 plt.show()
 
 (f"La pente de la droite de régression est : {slope}")
