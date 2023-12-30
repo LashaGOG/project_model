@@ -20,8 +20,8 @@ void mean_execution_time_algos(int number, int N_max, int div, int * tab_sizes, 
 int find_critical_size();
 int find_critical_size_mean();
 
-void arrays_to_file(int div, int * tab_sizes, double *tab_time_naive, double *tab_time_fft);
+void arrays_to_file(int size, int * tab_sizes, double *tab_time_naive, double *tab_time_fft);
 
-void mean_exec_time_2(int number, int N_max, int * tab_sizes, double * tab_time_naive, double * tab_time_fft);
+void mean_exec_time_pow(int number, int size, int * tab_sizes, double * tab_time_naive, double * tab_time_fft);
 
 #endif // TOOLS

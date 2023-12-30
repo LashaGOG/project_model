@@ -9,6 +9,8 @@
              CHEN Virginie
 */
 
+#define POLY_SIZE_ANY 0 // define to 1 for execution on polynoms of any degree, 0 for degree = pow(2,k)
+
 int main()
 {
     srand(time(NULL));
@@ -64,23 +66,45 @@ int main()
     int crit_size = find_critical_size_mean();
     printf("Result found: FFT-based polynomial multiplication becomes more efficient than the naive approach at a size of %d\n", crit_size);
 
-    /*Création des tableaux de données pour tracer les courbes de temps d'éxécution moyen*/
-    int number = 15;   // number of instances to use to calculating mean execution time on each size of instance
+    /* Creation of arrays to plot graphs */
+
     int N_max = 25000; // degree max of poly
-    int div = 25;      // divide N_max in div chunks
-    double *tab_time_naive = calloc(div, sizeof(double));
-    double *tab_time_fft = calloc(div, sizeof(double));
-    int *tab_sizes = malloc(sizeof(int[div]));
+    int number = 15;   // number of instances to use to calculating mean execution time on each size of instance
+    double *tab_time_naive, *tab_time_fft;
+    int *tab_sizes;
+    int size;
 
-    printf("Measuring mean execution time for maximum instance size : %d divided in %d equal parts\n", N_max, div);
-    // mean_execution_time_algos(number, N_max, div, tab_sizes, tab_time_naive, tab_time_fft); // exec_time for polynoms of any size
-    mean_exec_time_2(number, N_max, tab_sizes, tab_time_naive, tab_time_fft); // exec_time for polynoms of size that is power of two
+    if (POLY_SIZE_ANY == 1)
+    {
+        size = 25; // divide N_max in size chunks
+        tab_time_naive = calloc(size, sizeof(double));
+        tab_time_fft = calloc(size, sizeof(double));
+        tab_sizes = malloc(sizeof(int[size]));
+        printf("Measuring mean execution time for maximum for polynoms of any size. \nMaximum instance size : %d divided in %d equal parts\n", N_max, size);
+        mean_execution_time_algos(number, N_max, size, tab_sizes, tab_time_naive, tab_time_fft); // exec_time for polynoms of any size
+    }
 
-    arrays_to_file(div, tab_sizes, tab_time_naive, tab_time_fft);
+    else
+    {
+        // Create an array containing powers of 2
+        size = 16;
+        tab_time_naive = calloc(size, sizeof(double));
+        tab_time_fft = calloc(size, sizeof(double));
+        tab_sizes = malloc(sizeof(int[size]));
+        printf("Measuring mean execution time for polynoms size pow(2, k). \nMaximum power of 2 : pow(2,%d) \n", size);
+        mean_exec_time_pow(number, size, tab_sizes, tab_time_naive, tab_time_fft); // exec_time for polynoms of size that is power of two
+    }
 
-    free(tab_time_naive);
-    free(tab_time_fft);
-    free(tab_sizes);
+    printf("Writing data to file...\n");
+    arrays_to_file(size, tab_sizes, tab_time_naive, tab_time_fft);
+
+    if (tab_time_naive)
+        free(tab_time_naive);
+    if (tab_time_fft)
+        free(tab_time_fft);
+    if (tab_sizes)
+        free(tab_sizes);
+
     printf("Execution completed\n");
     printf("To visualize graphs type : \"python3 exec_times.txt\"\n");
     /******************** End ********************/
