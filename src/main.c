@@ -91,7 +91,7 @@ int main()
         tab_time_naive = calloc(size, sizeof(double));
         tab_time_fft = calloc(size, sizeof(double));
         tab_sizes = malloc(sizeof(int[size]));
-        printf("Measuring mean execution time for polynoms size pow(2, k). \nMaximum power of 2 : pow(2,%d) \n", size);
+        printf("Measuring mean execution time for polynoms of size pow(2, k). \nMaximum power of 2 : pow(2,%d) \n", size - 1);
         mean_exec_time_pow(number, size, tab_sizes, tab_time_naive, tab_time_fft); // exec_time for polynoms of size that is power of two
     }
 
