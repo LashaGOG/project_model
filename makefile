@@ -22,7 +22,7 @@ all: prepare $(PROGRAMS)
 
 # create bin directory
 prepare:
-	mkdir -p $(OBJ_DIR)
+	@[ -d $(OBJ_DIR) ] || mkdir -p $(OBJ_DIR)
 
 # main program rule
 $(PROGRAMS): $(OBJECTS)
@@ -31,13 +31,6 @@ $(PROGRAMS): $(OBJECTS)
 # generic rule for object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CCFLAGS) $< -o $@
-
-# include dependencies for each source file
--include $(OBJECTS:.o=.d)
-
-# generate dependencies
-$(OBJ_DIR)/%.d: $(SRC_DIR)/%.c
-	@$(CC) $(CCFLAGS) -MM -MT '$(@:.d=.o)' $< -MF $@
 
 # Clean rule
 clean:

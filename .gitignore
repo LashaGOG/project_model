@@ -54,3 +54,5 @@ dkms.conf
 # other
 tests
 main
+*txt
+temps_execution
