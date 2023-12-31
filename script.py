@@ -10,7 +10,7 @@ filename = "exec_times.txt" # format : size | t_naive[i]| t_fft[i] separated wit
 
 
 # Lecture des données
-chemin_fichier = 'exec_times_15_25k_25.txt'
+chemin_fichier = 'exec_times_pow.txt'
 donnees = pd.read_csv(chemin_fichier, sep=" ", header=None, names=["Taille", "Temps naïf", "Temps fft"])
 
 
@@ -44,6 +44,11 @@ plt.plot(donnees["Taille"], donnees["Temps fft"], 'o-')
 plt.xlabel("Taille du polynôme")
 plt.ylabel("Temps d'éxécution moyen")
 plt.title("Temps d'éxécution moyen de l'algorithme fft")
+
+slope2, intercept2, r_value2, p_value2, std_err = linregress(donnees["Taille"], donnees["Temps fft"])
+plt.plot(donnees["Taille"], intercept2 + slope2 * donnees["Taille"], 'r', label=f'Régression linéaire (pente = {slope2:.2f})')
+plt.legend()
+
 
 
 plt.show()
