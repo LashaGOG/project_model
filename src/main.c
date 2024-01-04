@@ -9,7 +9,7 @@
              CHEN Virginie
 */
 
-#define POLY_SIZE_ANY 0 // define to 1 for execution on polynoms of any degree, 0 for degree = pow(2,k)
+#define POLY_SIZE_ANY 1 // define to 1 for execution on polynoms of any degree, 0 for degree = pow(2,k)
 
 int main()
 {
@@ -50,16 +50,16 @@ int main()
 
     /******************** FIND N_max SIZE FOE EACH ALGORITHM WITH EXEC_TIME < 1s ********************/
 
-    find_max_size(0);       //Naive Algorithm
+    // find_max_size(0);       //Naive Algorithm
     // // Lasha :    n = 23000, exec_time = 1.032500
     // // Virginie : n = 26000, exec_time = 1.017754
     // // Philippe : n = 24000, exec_time = 1.071993
 
-    find_max_size(1);       //FFT Algorithm
+    // find_max_size(1);       //FFT Algorithm
     // // Lasha :    n = 65000, exec_time = 0.175214 and SegFault for n > 66000
     // // Virginie : n = 65000, exec_time = 0.138843 and SegFault for n > 66000
     // // Philippe : n = 65000, exec_time = 0.190115 and SegFault for n > 66000
-    // printf("==============================================================\n");
+    printf("==============================================================\n");
 
     /******************** FIND CRITICAL SIZE I.E. SIZE WHERE FFT BECOMES MORE EFFICENT THAN NAIVE ********************/
 

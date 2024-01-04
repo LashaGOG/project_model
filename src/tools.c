@@ -147,17 +147,12 @@ int find_critical_size()
     int max_n = 10;
     double t_naive;
     double t_fft;
-
-    // printf("Looking for the size for which fft is faster....\n");
+    
     do
     {
         measure_execution_time_mean(max_n, 20, &t_naive, &t_fft);
         max_n += 10;
-        // printf("n = %d exec_time_naive = %lf, exec_time_fft = %lf \n", max_n, t_naive,t_fft);
-    } while (t_naive < t_fft);
-    // printf("t_naive = %lf t_fft = %lf\n", t_naive, t_fft);
-    // printf("Critical size found\n");
-    // printf("Valeur de max_n = %d \n",max_n);
+        } while (t_naive < t_fft);
     return max_n;
 }
 
@@ -169,19 +164,11 @@ int find_critical_size_mean()
     for (int i = 0; i < n; i++)
     {
         val += find_critical_size();
-        // printf("%d , valeur : %d \n",i,val);
     }
     int critical_size = val / n;
-    // printf("Result found: FFT-based polynomial multiplication becomes more efficient than the naive approach at a size of %d\n.", critical_size);
     printf("Critical size : %d\n", critical_size);
     return critical_size;
 }
-
-// double *compute_mean_exec_time(int *tab_sizes, int nb_sizes, int n)
-// {
-//     /* menerate mean execution time for each algorithm */
-//     double *mean_exec_times = (double *)calloc(nb_sizes, sizeof(double));
-// }
 
 void arrays_to_file(int size, int *tab_sizes, double *tab_time_naive, double *tab_time_fft)
 

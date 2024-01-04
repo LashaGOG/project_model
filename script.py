@@ -10,16 +10,17 @@ filename = "exec_times.txt" # format : size | t_naive[i]| t_fft[i] separated wit
 
 
 # Lecture des données
-chemin_fichier = 'exec_times_pow.txt'
+chemin_fichier = 'exec_times.txt'
 donnees = pd.read_csv(chemin_fichier, sep=" ", header=None, names=["Taille", "Temps naïf", "Temps fft"])
 
 
 #Courbe de naïf
 plt.figure()
-plt.plot(donnees["Taille"], donnees["Temps naïf"], 'o-')
+plt.plot(donnees["Taille"], donnees["Temps naïf"], 'o-', label="Naïf")
 plt.xlabel("Taille du polynôme")
 plt.ylabel("Temps d'exécution moyen")
 plt.title("Temps d'exécution moyen de l'algorithme naïf")
+plt.legend()
 
 
 #Courbe de naïf log-log
@@ -39,19 +40,15 @@ plt.legend()
 
 
 #Courbe de FFT
+
 plt.figure()
-plt.plot(donnees["Taille"], donnees["Temps fft"], 'o-')
+plt.plot(donnees["Taille"], donnees["Temps fft"], 'o-', label="fft")
 plt.xlabel("Taille du polynôme")
 plt.ylabel("Temps d'éxécution moyen")
 plt.title("Temps d'éxécution moyen de l'algorithme fft")
 
-slope2, intercept2, r_value2, p_value2, std_err = linregress(donnees["Taille"], donnees["Temps fft"])
-plt.plot(donnees["Taille"], intercept2 + slope2 * donnees["Taille"], 'r', label=f'Régression linéaire (pente = {slope2:.2f})')
 plt.legend()
-
-
 
 plt.show()
 
-(f"La pente de la droite de régression est : {slope}")
 
