@@ -27,6 +27,8 @@ After the compilation you can execute the program as follows :
 ./main
 ```
 
+In main.c, define POLY_SIZE_ANY as 1 if you need to handle polynomials of any degree. Define it as 0 for polynomials of degrees that are powers of 2.
+
 # Graphical rendering
 
 For graphical rendering of simulation results run :
