@@ -5,6 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import linregress
 
+#   AUTHORS : TAN Philippe
+#             GOGRITCHIANI Lasha
+#             CHEN Virginie
+
 
 filename = "exec_times.txt" # format : size | t_naive[i]| t_fft[i] separated with spaces
 
